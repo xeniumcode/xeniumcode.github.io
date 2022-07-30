@@ -42,7 +42,7 @@ jobs:
     - name: Generate HTML
       run: zola build
     # Add CNAME, either (first one used)
-    # - file in the root
+    # - file in the root . 
     # - the environment variable set above
     - name: add CNAME
       run: |
