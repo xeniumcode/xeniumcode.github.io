@@ -1,31 +1,17 @@
-# Zola build workflow.
-
-# Prerequisites:
-# - zola writes output to public/
-# - variables below set correctly
-#
-# Setting it up:
-#   It is a general limitation of gh-actions that they cannot make the very first
-#   deploy to gh-pages.  It will seem to work, but not appear on the CDN to be
-#   online.  You need to go to settings and set the gh-pages branch, then future
-#   deploys will work.  See
-#   https://github.com/marketplace/actions/github-pages-action#%EF%B8%8F-first-deployment-with-github_token
-
 name: Build/deploy website
 
 env:
   ZOLA_VERSION: "0.15.3"
-  MAIN_BRANCH: "master"
+  MAIN_BRANCH: "main"
   TARGET_BRANCH: "gh-pages"
-  #CNAME : "xeniumcode.github.io"
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -41,20 +27,6 @@ jobs:
         | sudo tar xzf - -C /usr/local/bin
     - name: Generate HTML
       run: zola build
-    # Add CNAME, either (first one used)
-    # - file in the root . 
-    # - the environment variable set above
-    - name: add CNAME
-      run: |
-        if [ -f CNAME ] ; then
-            mv CNAME public/
-            echo "Copied CNAME from repository root"
-            exit 0
-        fi
-        if [ -n ${{ env.CNAME }} ] ; then
-            echo -n ${{ env.CNAME }} > public/CNAME
-            echo "Used CNAME from the action workflow file"
-        fi
     - name: Deploy to gh-pages
       if: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH) }}
       uses: peaceiris/actions-gh-pages@v3
