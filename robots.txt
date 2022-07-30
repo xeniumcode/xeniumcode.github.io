@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https:xeniumcode.github.io/sitemap.xml
