@@ -2,17 +2,17 @@ name: Build/deploy website
 
 env:
   ZOLA_VERSION: "0.15.3"
-  MAIN_BRANCH: "master"
+  MAIN_BRANCH: "main"
   TARGET_BRANCH: "gh-pages"
   CNAME: "xeniumcode.github.io"
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
